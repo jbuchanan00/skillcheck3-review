@@ -1,11 +1,19 @@
 import React from 'react'
 import './App.css'
+import Welcome from './components/Welcome'
+import House from './components/House'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <h1>App</h1>
-    </div>
+    <HashRouter>
+      <div className="App">
+        <Switch>
+          <Route path="/" exact component={Welcome} />
+          <Route path="/house/:name" component={House} />
+        </Switch>
+      </div>
+    </HashRouter>
   )
 }
 
