@@ -13,8 +13,15 @@ app.get('/api/house/:houseName', (req, res) => {
   // const {houseName} = req.params
   const db = req.app.get('db')
   db.getHouse({house_name: req.params.houseName}).then(result => {
-    console.log(result)
+    // console.log(result)
     res.status(200).send(result[0])
+  })
+})
+app.get('/api/students/:houseId', (req, res) => {
+  console.log(req.params.houseId)
+  const db = req.app.get('db')
+  db.getHouseStudents({house_id: req.params.houseId}).then(result => {
+    res.status(200).send(result)
   })
 })
 

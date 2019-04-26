@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
 export default class Welcome extends Component {
   constructor() {
@@ -11,10 +12,10 @@ export default class Welcome extends Component {
       <div>
         <h1>Houses</h1>
         <div>
-          <button>Hufflepuff</button>
-          <button>Gryffindor</button>
-          <button>Slytherin</button>
-          <button>Ravenclaw</button>
+          <Link to='/house/Hufflepuff'><button>Hufflepuff</button></Link>
+          <Link to='/house/Gryffindor'><button>Gryffindor</button></Link>
+          <Link to='/house/Slytherin'><button>Slytherin</button></Link>
+          <Link to='/house/Ravenclaw'><button>Ravenclaw</button></Link>
         </div>
       </div>
     )

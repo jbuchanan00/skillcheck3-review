@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import store, { GET_STUDENTS } from '../ducks/store'
 
 export default class House extends Component {
   constructor() {
@@ -17,14 +18,29 @@ export default class House extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getHouseInfo()
+  async componentDidMount() {
+    await this.getHouseInfo()
+    await this.getStudentsInTheHouse()
+    store.subscribe(() => {
+      const reduxState = store.getState()
+      this.setState({
+        students: reduxState.students
+      })
+    })
   }
 
-  getHouseInfo() {
-    const {name} = this.props.match.params
-    axios.get(`/api/house/${name}`).then(res => {
-      this.setState(res.data)
+  async getHouseInfo() {
+    const { name } = this.props.match.params
+    const res = await axios.get(`/api/house/${name}`)
+    this.setState(res.data)
+  }
+
+  getStudentsInTheHouse() {
+    axios.get(`/api/students/${this.state.id}`).then(res => {
+      store.dispatch({
+        type: GET_STUDENTS,
+        payload: res.data
+      })
     })
   }
 
@@ -35,12 +51,12 @@ export default class House extends Component {
         <h3>{this.state.description}</h3>
         <h2>{this.state.patron_animal}</h2>
         <figure>
-          <img src={this.state.img} alt=""/>
+          <img src={this.state.img} alt="" />
         </figure>
-        <hr/>
+        <hr />
         <h3>Students</h3>
-        {this.state.students.map((student) => (
-          <h4>{student.name}</h4>
+        {this.state.students.map(student => (
+          <h4>{student.student}</h4>
         ))}
       </div>
     )
